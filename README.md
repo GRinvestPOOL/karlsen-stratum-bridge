@@ -61,31 +61,31 @@ If the app is run with the `-prom={port}` flag the application will host
 stats on the port specified by `{port}`, these stats are documented in
 the file [prom.go](src/nexelliastratum/prom.go). This is intended to be use
 by prometheus but the stats can be fetched and used independently if
-desired. `curl http://localhost:2114/metrics | grep kls_` will get a
-listing of current stats. All published stats have a `kls_` prefix for
+desired. `curl http://localhost:2114/metrics | grep nxl_` will get a
+listing of current stats. All published stats have a `nxl_` prefix for
 ease of use.
 
 ```
-user:~$ curl http://localhost:2114/metrics | grep kls_
-# HELP kls_estimated_network_hashrate_gauge Gauge representing the estimated network hashrate
-# TYPE kls_estimated_network_hashrate_gauge gauge
-kls_estimated_network_hashrate_gauge 2.43428982879776e+14
-# HELP kls_network_block_count Gauge representing the network block count
-# TYPE kls_network_block_count gauge
-kls_network_block_count 271966
-# HELP kls_network_difficulty_gauge Gauge representing the network difficulty
-# TYPE kls_network_difficulty_gauge gauge
-kls_network_difficulty_gauge 1.2526479386202519e+14
-# HELP kls_valid_share_counter Number of shares found by worker over time
-# TYPE kls_valid_share_counter counter
-kls_valid_share_counter{ip="192.168.0.17",miner="SRBMiner-MULTI/2.4.1",wallet="nexellia:qzk3uh2twkhu0fmuq50mdy3r2yzuwqvstq745hxs7tet25hfd4egcafcdmpdl",worker="002"} 276
-kls_valid_share_counter{ip="192.168.0.24",miner="SRBMiner-MULTI/2.4.1",wallet="nexellia:qzk3uh2twkhu0fmuq50mdy3r2yzuwqvstq745hxs7tet25hfd4egcafcdmpdl",worker="003"} 43
-kls_valid_share_counter{ip="192.168.0.65",miner="SRBMiner-MULTI/2.4.1",wallet="nexellia:qzk3uh2twkhu0fmuq50mdy3r2yzuwqvstq745hxs7tet25hfd4egcafcdmpdl",worker="001"} 307
-# HELP kls_worker_job_counter Number of jobs sent to the miner by worker over time
-# TYPE kls_worker_job_counter counter
-kls_worker_job_counter{ip="192.168.0.17",miner="SRBMiner-MULTI/2.4.1",wallet="nexellia:qzk3uh2twkhu0fmuq50mdy3r2yzuwqvstq745hxs7tet25hfd4egcafcdmpdl",worker="002"} 3471
-kls_worker_job_counter{ip="192.168.0.24",miner="SRBMiner-MULTI/2.4.1",wallet="nexellia:qzk3uh2twkhu0fmuq50mdy3r2yzuwqvstq745hxs7tet25hfd4egcafcdmpdl",worker="003"} 3399
-kls_worker_job_counter{ip="192.168.0.65",miner="SRBMiner-MULTI/2.4.1",wallet="nexellia:qzk3uh2twkhu0fmuq50mdy3r2yzuwqvstq745hxs7tet25hfd4egcafcdmpdl",worker="001"} 3425
+user:~$ curl http://localhost:2114/metrics | grep nxl_
+# HELP nxl_estimated_network_hashrate_gauge Gauge representing the estimated network hashrate
+# TYPE nxl_estimated_network_hashrate_gauge gauge
+nxl_estimated_network_hashrate_gauge 2.43428982879776e+14
+# HELP nxl_network_block_count Gauge representing the network block count
+# TYPE nxl_network_block_count gauge
+nxl_network_block_count 271966
+# HELP nxl_network_difficulty_gauge Gauge representing the network difficulty
+# TYPE nxl_network_difficulty_gauge gauge
+nxl_network_difficulty_gauge 1.2526479386202519e+14
+# HELP nxl_valid_share_counter Number of shares found by worker over time
+# TYPE nxl_valid_share_counter counter
+nxl_valid_share_counter{ip="192.168.0.17",miner="SRBMiner-MULTI/2.4.1",wallet="nexellia:qzk3uh2twkhu0fmuq50mdy3r2yzuwqvstq745hxs7tet25hfd4egcafcdmpdl",worker="002"} 276
+nxl_valid_share_counter{ip="192.168.0.24",miner="SRBMiner-MULTI/2.4.1",wallet="nexellia:qzk3uh2twkhu0fmuq50mdy3r2yzuwqvstq745hxs7tet25hfd4egcafcdmpdl",worker="003"} 43
+nxl_valid_share_counter{ip="192.168.0.65",miner="SRBMiner-MULTI/2.4.1",wallet="nexellia:qzk3uh2twkhu0fmuq50mdy3r2yzuwqvstq745hxs7tet25hfd4egcafcdmpdl",worker="001"} 307
+# HELP nxl_worker_job_counter Number of jobs sent to the miner by worker over time
+# TYPE nxl_worker_job_counter counter
+nxl_worker_job_counter{ip="192.168.0.17",miner="SRBMiner-MULTI/2.4.1",wallet="nexellia:qzk3uh2twkhu0fmuq50mdy3r2yzuwqvstq745hxs7tet25hfd4egcafcdmpdl",worker="002"} 3471
+nxl_worker_job_counter{ip="192.168.0.24",miner="SRBMiner-MULTI/2.4.1",wallet="nexellia:qzk3uh2twkhu0fmuq50mdy3r2yzuwqvstq745hxs7tet25hfd4egcafcdmpdl",worker="003"} 3399
+nxl_worker_job_counter{ip="192.168.0.65",miner="SRBMiner-MULTI/2.4.1",wallet="nexellia:qzk3uh2twkhu0fmuq50mdy3r2yzuwqvstq745hxs7tet25hfd4egcafcdmpdl",worker="001"} 3425
 ```
 
 # Install
@@ -143,7 +143,7 @@ file, or overridden by modifying, adding or deleting the parameters in the
 Prometheus (the stats database) and Grafana (the dashboard) will be
 started and accessible on ports 9090 and 3000 respectively. Once all
 services are running, the dashboard should be reachable at
-`http://127.0.0.1:3000/d/x7cE7G74k1/klsb-monitoring` with default
+`http://127.0.0.1:3000/d/x7cE7G74k1/nxlb-monitoring` with default
 username and password `admin`.
 
 These commands builds the bridge component from source, rather than

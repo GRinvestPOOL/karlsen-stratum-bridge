@@ -63,7 +63,7 @@ func ListenAndServe(cfg BridgeConfig) error {
 	if blockWaitTime < minBlockWaitTime {
 		blockWaitTime = minBlockWaitTime
 	}
-	ksApi, err := NewKarlsenAPI(cfg.RPCServer, blockWaitTime, logger)
+	ksApi, err := NewNexelliaApi(cfg.RPCServer, blockWaitTime, logger)
 	if err != nil {
 		return err
 	}

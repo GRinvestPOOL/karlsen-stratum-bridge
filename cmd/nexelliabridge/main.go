@@ -42,7 +42,7 @@ func main() {
 		cfg.MinShareDiff = 4
 	}
 	if cfg.BlockWaitTime == 0 {
-		cfg.BlockWaitTime = 5 * time.Second // this should never happen due to kls 1s block times
+		cfg.BlockWaitTime = 5 * time.Second // this should never happen due to nxl 1s block times
 	}
 
 	log.Println("----------------------------------")

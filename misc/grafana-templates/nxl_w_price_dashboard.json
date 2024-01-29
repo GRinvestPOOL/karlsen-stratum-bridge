@@ -82,11 +82,12 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "count(sum(last_over_time(kls_valid_share_counter{wallet=~\"${wallet_filter}\"}[1m]) - last_over_time(kls_valid_share_counter{wallet=~\"${wallet_filter}\"}[1m] offset 10m)) by (worker) > 0)",
+          "expr": "count(sum(last_over_time(nxl_valid_share_counter{wallet=~\"${wallet_filter}\"}[1m]) - last_over_time(nxl_valid_share_counter{wallet=~\"${wallet_filter}\"}[1m] offset 10m)) by (worker) > 0)",
+          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
-          "refId": "A"
+          "refId": "B"
         }
       ],
       "title": "Connected Workers",
@@ -119,7 +120,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 11,
+        "w": 9,
         "x": 3,
         "y": 0
       },
@@ -148,7 +149,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "SUM(rate(kls_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[1m]))  * 1e9",
+          "expr": "SUM(rate(nxl_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[1m]))  * 1e9",
           "hide": false,
           "interval": "",
           "legendFormat": "1m",
@@ -162,7 +163,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "SUM(rate(kls_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[1h])) * 1e9",
+          "expr": "SUM(rate(nxl_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[1h])) * 1e9",
           "hide": false,
           "instant": false,
           "legendFormat": "1h",
@@ -175,7 +176,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "SUM(rate(kls_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[1d])) * 1e9",
+          "expr": "SUM(rate(nxl_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[1d])) * 1e9",
           "hide": false,
           "legendFormat": "1d",
           "range": true,
@@ -195,7 +196,7 @@
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 0,
+          "decimals": 2,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -224,8 +225,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 5,
-        "x": 14,
+        "w": 4,
+        "x": 12,
         "y": 0
       },
       "id": 33,
@@ -243,7 +244,7 @@
           "values": false
         },
         "text": {
-          "valueSize": 64
+          "valueSize": 50
         },
         "textMode": "value"
       },
@@ -256,9 +257,10 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "increase(kls_balance_by_wallet_gauge{wallet=~\"${wallet_filter}\"}[${resolution}]) *  ${show_balances}",
+          "expr": "increase(nxl_balance_by_wallet_gauge{wallet=~\"${wallet_filter}\"}[${resolution}]) * scalar((coin_price{currency=\"nxl\"} * on() vector(${show_balances} == bool 2)) + (${show_balances} * (${show_balances} < bool 2)))",
+          "hide": false,
           "instant": false,
-          "legendFormat": "KLS",
+          "legendFormat": "Rate",
           "range": true,
           "refId": "A"
         }
@@ -277,7 +279,7 @@
             "fixedColor": "green",
             "mode": "fixed"
           },
-          "decimals": 0,
+          "decimals": 2,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -294,8 +296,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 5,
-        "x": 19,
+        "w": 4,
+        "x": 16,
         "y": 0
       },
       "id": 12,
@@ -312,7 +314,7 @@
           "values": false
         },
         "text": {
-          "valueSize": 64
+          "valueSize": 50
         },
         "textMode": "auto"
       },
@@ -324,13 +326,81 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "SUM (kls_balance_by_wallet_gauge{wallet=~\"${wallet_filter}\"}) * ${show_balances}",
-          "legendFormat": "KLS",
+          "expr": "SUM (nxl_balance_by_wallet_gauge{wallet=~\"${wallet_filter}\"}) * scalar((coin_price{currency=\"nxl\"} * on() vector(${show_balances} == bool 2)) + (${show_balances} * (${show_balances} < bool 2)))",
+          "legendFormat": "Total",
           "range": true,
           "refId": "A"
         }
       ],
       "title": "Total Balance",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "wFbInMnVk"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          },
+          "decimals": 5,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "id": 44,
+      "maxDataPoints": 96,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 50
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.2.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "wFbInMnVk"
+          },
+          "editorMode": "code",
+          "expr": "coin_price{currency=\"nxl\"}",
+          "legendFormat": "USD/KLS",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "KLS Price",
       "type": "stat"
     },
     {
@@ -362,7 +432,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
+        "w": 4,
         "x": 0,
         "y": 4
       },
@@ -381,7 +451,7 @@
           "values": false
         },
         "text": {
-          "valueSize": 64
+          "valueSize": 50
         },
         "textMode": "auto"
       },
@@ -393,8 +463,10 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "SUM(increase(kls_blocks_mined{wallet=~\"${wallet_filter}\"}[${resolution}]))",
-          "legendFormat": "__auto",
+          "exemplar": false,
+          "expr": "SUM(increase(nxl_blocks_mined{wallet=~\"${wallet_filter}\"}[${resolution}]))",
+          "instant": false,
+          "legendFormat": "Blocks",
           "range": true,
           "refId": "A"
         }
@@ -429,7 +501,7 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 3,
+        "x": 4,
         "y": 4
       },
       "id": 29,
@@ -447,7 +519,7 @@
           "values": false
         },
         "text": {
-          "valueSize": 64
+          "valueSize": 50
         },
         "textMode": "auto"
       },
@@ -460,9 +532,9 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "time() - max_over_time(timestamp(sum(changes(kls_blocks_mined{wallet=~\"${wallet_filter}\"}[5m]) > 0))[1d:1m]) + 300",
+          "expr": "time() - max_over_time(timestamp(sum(changes(nxl_blocks_mined{wallet=~\"${wallet_filter}\"}[5m]) > 0))[1d:1m]) + 300",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "Elapsed time",
           "range": true,
           "refId": "A"
         }
@@ -497,7 +569,7 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 7,
+        "x": 8,
         "y": 4
       },
       "id": 43,
@@ -515,7 +587,7 @@
           "values": false
         },
         "text": {
-          "valueSize": 64
+          "valueSize": 50
         },
         "textMode": "auto"
       },
@@ -528,9 +600,9 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "(sum(kls_estimated_network_hashrate_gauge) / (sum(rate(kls_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[${resolution}])) * 1e9)) / 60",
+          "expr": "(sum(nxl_estimated_network_hashrate_gauge) / (sum(rate(nxl_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[${resolution}])) * 1e9)) / 60",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "Block time",
           "range": true,
           "refId": "A"
         }
@@ -565,7 +637,7 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 11,
+        "x": 12,
         "y": 4
       },
       "id": 18,
@@ -583,7 +655,7 @@
           "values": false
         },
         "text": {
-          "valueSize": 64
+          "valueSize": 50
         },
         "textMode": "auto"
       },
@@ -596,9 +668,9 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "kls_estimated_network_hashrate_gauge",
+          "expr": "nxl_estimated_network_hashrate_gauge",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "Nethash",
           "range": true,
           "refId": "A"
         }
@@ -634,7 +706,7 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 15,
+        "x": 16,
         "y": 4
       },
       "id": 21,
@@ -652,7 +724,7 @@
           "values": false
         },
         "text": {
-          "valueSize": 64
+          "valueSize": 50
         },
         "textMode": "value"
       },
@@ -665,9 +737,9 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": " avg(kls_network_difficulty_gauge) / 1000000000000",
+          "expr": " avg(nxl_network_difficulty_gauge) / 1000000000000",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "Netdiff",
           "range": true,
           "refId": "A"
         }
@@ -676,7 +748,10 @@
       "type": "stat"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "prometheus",
+        "uid": "wFbInMnVk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -697,8 +772,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 5,
-        "x": 19,
+        "w": 4,
+        "x": 20,
         "y": 4
       },
       "id": 35,
@@ -715,7 +790,7 @@
           "values": false
         },
         "text": {
-          "valueSize": 64
+          "valueSize": 50
         },
         "textMode": "auto"
       },
@@ -728,9 +803,9 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "MAX(kls_network_block_count)",
+          "expr": "MAX(nxl_network_block_count)",
           "instant": true,
-          "legendFormat": "__auto",
+          "legendFormat": "Block Height",
           "range": false,
           "refId": "A"
         }
@@ -881,7 +956,6 @@
         "y": 8
       },
       "id": 41,
-      "interval": "1m",
       "maxDataPoints": 96,
       "options": {
         "legend": {
@@ -908,7 +982,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "${resolution_s} * 1e9 * sum(rate(kls_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[${resolution}])) / avg(kls_estimated_network_hashrate_gauge)",
+          "expr": "${resolution_s} * 1e9 * sum(rate(nxl_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[${resolution}])) / avg(nxl_estimated_network_hashrate_gauge)",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
@@ -923,7 +997,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(increase(kls_blocks_mined{wallet=~\"${wallet_filter}\"}[${resolution}]))",
+          "expr": "sum(increase(nxl_blocks_mined{wallet=~\"${wallet_filter}\"}[${resolution}]))",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
@@ -938,7 +1012,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(kls_blocks_mined{wallet=~\"${wallet_filter}\"} - kls_blocks_mined{wallet=~\"${wallet_filter}\"} offset $__interval > 0) by (worker)",
+          "expr": "sum(nxl_blocks_mined{wallet=~\"${wallet_filter}\"} - nxl_blocks_mined{wallet=~\"${wallet_filter}\"} offset $__interval > 0) by (worker)",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
@@ -1010,7 +1084,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "sum(increase(kls_blocks_mined{wallet=~\"${wallet_filter}\"}[$resolution])) by (worker)",
+          "expr": "sum(increase(nxl_blocks_mined{wallet=~\"${wallet_filter}\"}[$resolution])) by (worker)",
           "legendFormat": "{{worker}}",
           "range": true,
           "refId": "A"
@@ -1077,7 +1151,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "sum(increase(kls_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[$resolution])) by (worker)",
+          "expr": "sum(increase(nxl_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[$resolution])) by (worker)",
           "legendFormat": "{{worker}}",
           "range": true,
           "refId": "A"
@@ -1198,7 +1272,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "SUM(rate(kls_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[$resolution]))",
+          "expr": "SUM(rate(nxl_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[$resolution]))",
           "hide": false,
           "legendFormat": "Total",
           "range": true,
@@ -1210,7 +1284,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "sum(rate(kls_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[$resolution])) by (worker)",
+          "expr": "sum(rate(nxl_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[$resolution])) by (worker)",
           "hide": false,
           "legendFormat": "{{worker}}",
           "range": true,
@@ -1309,7 +1383,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "sum(rate(kls_valid_share_counter{wallet=~\"${wallet_filter}\"}[$resolution]) * 60) by (worker)",
+          "expr": "sum(rate(nxl_valid_share_counter{wallet=~\"${wallet_filter}\"}[$resolution]) * 60) by (worker)",
           "legendFormat": "{{worker}}",
           "range": true,
           "refId": "A"
@@ -1409,7 +1483,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "SUM BY (miner) (rate(kls_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[$resolution]))",
+          "expr": "SUM BY (miner) (rate(nxl_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[$resolution]))",
           "legendFormat": "{{miner}}",
           "range": true,
           "refId": "A"
@@ -1548,7 +1622,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "SUM BY(worker, type) (rate(kls_invalid_share_counter{wallet=~\"${wallet_filter}\"}[${resolution}]))",
+          "expr": "SUM BY(worker, type) (rate(nxl_invalid_share_counter{wallet=~\"${wallet_filter}\"}[${resolution}]))",
           "hide": false,
           "legendFormat": "{{worker}} : {{type}}",
           "range": true,
@@ -1560,7 +1634,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "increase(kls_invalid_share_counter{wallet=~\"${wallet_filter}\"}[$__interval])",
+          "expr": "increase(nxl_invalid_share_counter{wallet=~\"${wallet_filter}\"}[$__interval])",
           "hide": false,
           "legendFormat": "{{worker}} : {{type}}",
           "range": true,
@@ -1615,7 +1689,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1667,7 +1742,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "kls_estimated_network_hashrate_gauge",
+          "expr": "nxl_estimated_network_hashrate_gauge",
           "legendFormat": "hashrate",
           "range": true,
           "refId": "A"
@@ -1678,7 +1753,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "kls_network_difficulty_gauge / 1e12",
+          "expr": "nxl_network_difficulty_gauge / 1e12",
           "hide": false,
           "legendFormat": "difficulty",
           "range": true,
@@ -1730,7 +1805,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -1763,7 +1839,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "AVG BY(wallet) (kls_balance_by_wallet_gauge{wallet=~\"${wallet_filter}\"}) *  ${show_balances}",
+          "expr": "AVG BY(wallet) (nxl_balance_by_wallet_gauge{wallet=~\"${wallet_filter}\"}) *  ${show_balances}",
           "legendFormat": "{{wallet}}",
           "range": true,
           "refId": "A"
@@ -1817,7 +1893,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1856,7 +1933,7 @@
             "uid": "wFbInMnVk"
           },
           "editorMode": "code",
-          "expr": "SUM(delta(kls_network_block_count[1m])) / 60",
+          "expr": "SUM(delta(nxl_network_block_count[1m])) / 60",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -1911,7 +1988,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           },
@@ -1948,7 +2026,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "(sum(kls_estimated_network_hashrate_gauge) / (sum(rate(kls_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[${resolution}])) * 1e9))",
+          "expr": "(sum(nxl_estimated_network_hashrate_gauge) / (sum(rate(nxl_valid_share_diff_counter{wallet=~\"${wallet_filter}\"}[${resolution}])) * 1e9))",
           "instant": false,
           "legendFormat": "Estimate",
           "range": true,
@@ -2067,7 +2145,7 @@
       {
         "current": {
           "selected": true,
-          "text": "show",
+          "text": "KLS",
           "value": "1"
         },
         "hide": 0,
@@ -2076,39 +2154,44 @@
         "name": "show_balances",
         "options": [
           {
+            "selected": false,
+            "text": "USD",
+            "value": "2"
+          },
+          {
             "selected": true,
-            "text": "show",
+            "text": "KLS",
             "value": "1"
           },
           {
             "selected": false,
-            "text": "hide",
+            "text": "Hide",
             "value": "0"
           }
         ],
-        "query": "1,0",
+        "query": "USD : 2, KLS : 1, Hide : 0",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
       },
       {
         "current": {
-          "selected": false,
-          "text": "nexellia:qzccsk5fwrh3c88460a0a99srnmhwf5gy49dk2e96935px29u5uks92guhf98",
-          "value": "nexellia:qzccsk5fwrh3c88460a0a99srnmhwf5gy49dk2e96935px29u5uks92guhf98"
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "wFbInMnVk"
         },
-        "definition": "label_values(kls_balance_by_wallet_gauge, wallet)",
+        "definition": "label_values(nxl_balance_by_wallet_gauge, wallet)",
         "hide": 0,
         "includeAll": true,
         "multi": false,
         "name": "wallet_filter",
         "options": [],
         "query": {
-          "query": "label_values(kls_balance_by_wallet_gauge, wallet)",
+          "query": "label_values(nxl_balance_by_wallet_gauge, wallet)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -2153,6 +2236,6 @@
   "timezone": "",
   "title": "KLSB Monitoring",
   "uid": "x7cE7G74k",
-  "version": 44,
+  "version": 62,
   "weekStart": ""
 }

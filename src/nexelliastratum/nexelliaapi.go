@@ -12,7 +12,7 @@ import (
 	"go.uber.org/zap"
 )
 
-type KarlsenApi struct {
+type NexelliaApi struct {
 	address       string
 	blockWaitTime time.Duration
 	logger        *zap.SugaredLogger
@@ -20,13 +20,13 @@ type KarlsenApi struct {
 	connected     bool
 }
 
-func NewKarlsenAPI(address string, blockWaitTime time.Duration, logger *zap.SugaredLogger) (*KarlsenApi, error) {
+func NewNexelliaApi(address string, blockWaitTime time.Duration, logger *zap.SugaredLogger) (*NexelliaApi, error) {
 	client, err := rpcclient.NewRPCClient(address)
 	if err != nil {
 		return nil, err
 	}
 
-	return &KarlsenApi{
+	return &NexelliaApi{
 		address:       address,
 		blockWaitTime: blockWaitTime,
 		logger:        logger.With(zap.String("component", "nexelliaapi:"+address)),
@@ -35,13 +35,13 @@ func NewKarlsenAPI(address string, blockWaitTime time.Duration, logger *zap.Suga
 	}, nil
 }
 
-func (ks *KarlsenApi) Start(ctx context.Context, blockCb func()) {
+func (ks *NexelliaApi) Start(ctx context.Context, blockCb func()) {
 	ks.waitForSync(true)
 	go ks.startBlockTemplateListener(ctx, blockCb)
 	go ks.startStatsThread(ctx)
 }
 
-func (ks *KarlsenApi) startStatsThread(ctx context.Context) {
+func (ks *NexelliaApi) startStatsThread(ctx context.Context) {
 	ticker := time.NewTicker(30 * time.Second)
 	for {
 		select {
@@ -64,7 +64,7 @@ func (ks *KarlsenApi) startStatsThread(ctx context.Context) {
 	}
 }
 
-func (ks *KarlsenApi) reconnect() error {
+func (ks *NexelliaApi) reconnect() error {
 	if ks.nexelliad != nil {
 		return ks.nexelliad.Reconnect()
 	}
@@ -77,7 +77,7 @@ func (ks *KarlsenApi) reconnect() error {
 	return nil
 }
 
-func (s *KarlsenApi) waitForSync(verbose bool) error {
+func (s *NexelliaApi) waitForSync(verbose bool) error {
 	if verbose {
 		s.logger.Info("checking nexelliad sync state")
 	}
@@ -98,7 +98,7 @@ func (s *KarlsenApi) waitForSync(verbose bool) error {
 	return nil
 }
 
-func (s *KarlsenApi) startBlockTemplateListener(ctx context.Context, blockReadyCb func()) {
+func (s *NexelliaApi) startBlockTemplateListener(ctx context.Context, blockReadyCb func()) {
 	blockReadyChan := make(chan bool)
 	err := s.nexelliad.RegisterForNewBlockTemplateNotifications(func(_ *appmessage.NewBlockTemplateNotificationMessage) {
 		blockReadyChan <- true
@@ -129,7 +129,7 @@ func (s *KarlsenApi) startBlockTemplateListener(ctx context.Context, blockReadyC
 	}
 }
 
-func (ks *KarlsenApi) GetBlockTemplate(
+func (ks *NexelliaApi) GetBlockTemplate(
 	client *gostratum.StratumContext) (*appmessage.GetBlockTemplateResponseMessage, error) {
 	template, err := ks.nexelliad.GetBlockTemplate(client.WalletAddr,
 		fmt.Sprintf(`'%s' via nexellia-network/nexellia-stratum-bridge_%s`, client.RemoteApp, version))

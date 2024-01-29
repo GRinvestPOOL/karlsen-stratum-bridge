@@ -6,7 +6,7 @@ This assumes that you will be running the nxl_bridge on the mining computer. I'v
 
 ---
 
-I'll be using bzminer here, so I'm focusing on the file [here](misc/hive-templates/kls_bz_local_adapter.json). Hive gives the option to import from a file or from your clipboard; I'll be copying directly from the clipboard in this example.
+I'll be using bzminer here, so I'm focusing on the file [here](misc/hive-templates/nxl_bz_local_adapter.json). Hive gives the option to import from a file or from your clipboard; I'll be copying directly from the clipboard in this example.
 
 Navigate to the template that you want and hit the 'copy file contents' button
 
