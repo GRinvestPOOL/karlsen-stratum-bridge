@@ -6,14 +6,14 @@ stratum_port: :5555
 # For a list of public nodes, run `nslookup mainnet-dnsseed.daglabs-dev.com` 
 # uncomment for to use a public node
 # karlsend_address: 46.17.104.200:42110
-nexelliad_address: localhost:17110
+nexelliad_address: localhost:33455
 
 # min_share_diff: only accept shares of the specified difficulty (or higher) from 
 # the miner(s).  Higher values will reduce the number of shares submitted, thereby 
 # reducing network traffic and server load, while lower values will increase the
 # number of shares submitted, thereby reducing the amount of time needed for 
 # accurate hashrate measurements
-# min_share_diff: 4
+min_share_diff: 64
 
 # block_wait_time: time to wait since last new block message from karlsend before
 # manually requesting a new block
