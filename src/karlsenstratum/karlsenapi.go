@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/karlsen-network/karlsen-stratum-bridge/src/gostratum"
-	"github.com/karlsen-network/karlsend/app/appmessage"
-	"github.com/karlsen-network/karlsend/infrastructure/network/rpcclient"
+	"github.com/GRinvestPOOL/karlsen-stratum-bridge/src/gostratum"
+	"github.com/Nexellia-Network/nexelliad/app/appmessage"
+	"github.com/Nexellia-Network/nexelliad/infrastructure/network/rpcclient"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 )

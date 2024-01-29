@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/karlsen-network/karlsend/util"
+	"github.com/Nexellia-Network/nexelliad/util"
 	"github.com/mattn/go-colorable"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
@@ -111,18 +111,18 @@ func SendExtranonce(ctx *StratumContext) {
 	}
 }
 
-var walletRegex = regexp.MustCompile("karlsen:[a-z0-9]+")
+var walletRegex = regexp.MustCompile("nexellia:[a-z0-9]+")
 
 func CleanWallet(in string) (string, error) {
 	_, err := util.DecodeAddress(in, util.Bech32PrefixKaspa)
 	if err == nil {
 		return in, nil // good to go
 	}
-	if !strings.HasPrefix(in, "karlsen:") {
-		return CleanWallet("karlsen:" + in)
+	if !strings.HasPrefix(in, "nexellia:") {
+		return CleanWallet("nexellia:" + in)
 	}
 
-	// has karlsen: prefix but other weirdness somewhere
+	// has nexellia: prefix but other weirdness somewhere
 	if walletRegex.MatchString(in) {
 		return in[0:67], nil
 	}

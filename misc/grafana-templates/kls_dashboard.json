@@ -2094,8 +2094,8 @@
       {
         "current": {
           "selected": false,
-          "text": "karlsen:qzccsk5fwrh3c88460a0a99srnmhwf5gy49dk2e96935px29u5uks92guhf98",
-          "value": "karlsen:qzccsk5fwrh3c88460a0a99srnmhwf5gy49dk2e96935px29u5uks92guhf98"
+          "text": "nexellia:qzccsk5fwrh3c88460a0a99srnmhwf5gy49dk2e96935px29u5uks92guhf98",
+          "value": "nexellia:qzccsk5fwrh3c88460a0a99srnmhwf5gy49dk2e96935px29u5uks92guhf98"
         },
         "datasource": {
           "type": "prometheus",

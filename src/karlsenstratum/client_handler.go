@@ -9,7 +9,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/karlsen-network/karlsen-stratum-bridge/src/gostratum"
+	"github.com/GRinvestPOOL/karlsen-stratum-bridge/src/gostratum"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 )
@@ -109,7 +109,7 @@ func (c *clientListener) NewBlockAvailable(kapi *KarlsenApi) {
 					client.Disconnect() // unrecoverable
 				} else {
 					RecordWorkerError(client.WalletAddr, ErrFailedBlockFetch)
-					client.Logger.Error(fmt.Sprintf("failed fetching new block template from karlsen: %s", err))
+					client.Logger.Error(fmt.Sprintf("failed fetching new block template from nexellia: %s", err))
 				}
 				return
 			}

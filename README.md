@@ -7,7 +7,7 @@ This daemon is confirmed working with the miners below in both dual-mining
 and karlsen-only modes (for those that support it) and Windows, Linux,
 macOS and HiveOS.
 
-* [srbminer](https://github.com/doktor83/SRBMiner-Multi/releases)
+- [srbminer](https://github.com/doktor83/SRBMiner-Multi/releases)
 
 Discord discussions/issues: [here](https://discord.gg/pPNESjGfb5)
 
@@ -15,7 +15,7 @@ Huge shoutout to https://github.com/KaffinPX/KStratum and
 https://github.com/onemorebsmith/karlsen-stratum-bridge and
 https://github.com/rdugan/kaspa-stratum-bridge for the inspiration.
 
-Tips appreciated: `karlsen:qqe3p64wpjf5y27kxppxrgks298ge6lhu6ws7ndx4tswzj7c84qkjlrspcuxw`
+Tips appreciated: `nexellia:qqe3p64wpjf5y27kxppxrgks298ge6lhu6ws7ndx4tswzj7c84qkjlrspcuxw`
 
 ## Hive Setup
 
@@ -132,7 +132,7 @@ default port settings, and listen on port 5555 for incoming stratum
 connections.
 
 ```
-git clone https://github.com/karlsen-network/karlsen-stratum-bridge.git
+git clone https://github.com/GRinvestPOOL/karlsen-stratum-bridge.git
 cd karlsen-stratum-bridge
 docker compose -f docker-compose-all-src.yml up -d --build
 ```
@@ -168,7 +168,7 @@ default port settings, and listen on port 5555 for incoming stratum
 connections.
 
 ```
-git clone https://github.com/karlsen-network/karlsen-stratum-bridge.git
+git clone https://github.com/GRinvestPOOL/karlsen-stratum-bridge.git
 cd karlsen-stratum-bridge
 docker compose -f docker-compose-bridge-src.yml up -d --build
 ```

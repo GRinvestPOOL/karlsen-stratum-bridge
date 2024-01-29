@@ -8,7 +8,7 @@ import (
 	"path"
 	"time"
 
-	"github.com/karlsen-network/karlsen-stratum-bridge/src/karlsenstratum"
+	"github.com/GRinvestPOOL/karlsen-stratum-bridge/src/karlsenstratum"
 	"gopkg.in/yaml.v2"
 )
 
