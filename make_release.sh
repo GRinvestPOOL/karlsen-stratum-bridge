@@ -1,11 +1,11 @@
-CMD_PATH="../cmd/karlsenbridge"
+CMD_PATH="../cmd/nexelliabridge"
 rm -rf release
 mkdir -p release
 cd release
 VERSION=1.1.0
-ARCHIVE="kls_bridge-${VERSION}"
-OUTFILE="kls_bridge"
-OUTDIR="kls_bridge"
+ARCHIVE="nxl_bridge-${VERSION}"
+OUTFILE="nxl_bridge"
+OUTDIR="nxl_bridge"
 
 # windows
 mkdir -p ${OUTDIR};env GOOS=windows GOARCH=amd64 go build -o ${OUTDIR}/${OUTFILE}.exe ${CMD_PATH};cp ${CMD_PATH}/config.yaml ${OUTDIR}/

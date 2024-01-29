@@ -25,5 +25,5 @@ debug.test
 __debug_bin
 .DS_Store
 
-cmd/karlsenbridge/karlsenbridge
+cmd/nexelliabridge/nexelliabridge
 release/

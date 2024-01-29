@@ -1,4 +1,4 @@
-package karlsenstratum
+package nexelliastratum
 
 import (
 	"math/big"
@@ -19,7 +19,7 @@ type MiningState struct {
 	initialized bool
 	useBigJob   bool
 	connectTime time.Time
-	stratumDiff *karlsenDiff
+	stratumDiff *nexelliaDiff
 }
 
 func MiningStateGenerator() any {

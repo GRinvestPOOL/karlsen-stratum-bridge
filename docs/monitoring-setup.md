@@ -30,7 +30,7 @@ Youll see output about downloading images and such and eventually see output lik
 
 At this point everything is running successfully in the background.
 
-- kls_bridge is running on port :5555
+- nxl_bridge is running on port :5555
 - prometheus is running on port :9090
 - grafana is running on port :3000
 

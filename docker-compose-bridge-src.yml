@@ -1,9 +1,9 @@
 services:
-  kls_bridge:
+  nxl_bridge:
     build:
       context: .
       no_cache: true
-    container_name: kls_bridge
+    container_name: nxl_bridge
     restart: unless-stopped
     user: "0"
     command:
@@ -11,7 +11,7 @@ services:
       - '-stats=false'
       - '-stratum=:5555'
       - '-prom=:2114'
-      - '-karlsen=host.docker.internal:16110'
+      - '-nexellia=host.docker.internal:16110'
     ports:
       - 5555:5555
       - 2114:2114

@@ -1,4 +1,4 @@
-package karlsenstratum
+package nexelliastratum
 
 import (
 	"bytes"
@@ -23,17 +23,17 @@ var (
 // Basically three different ways of representing difficulty, each used on
 // different occasions.  All 3 are updated when the stratum diff is set via
 // the setDiffValue method
-type karlsenDiff struct {
+type nexelliaDiff struct {
 	hashValue   float64  // previously known as shareValue
 	diffValue   float64  // previously known as fixedDifficulty
 	targetValue *big.Int // previously know as fixedDifficultyBI
 }
 
-func newKarlsenDiff() *karlsenDiff {
-	return &karlsenDiff{}
+func newKarlsenDiff() *nexelliaDiff {
+	return &nexelliaDiff{}
 }
 
-func (k *karlsenDiff) setDiffValue(diff float64) {
+func (k *nexelliaDiff) setDiffValue(diff float64) {
 	k.diffValue = diff
 	k.targetValue = DiffToTarget(diff)
 	k.hashValue = DiffToHash(diff)

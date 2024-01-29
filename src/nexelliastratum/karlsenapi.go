@@ -1,4 +1,4 @@
-package karlsenstratum
+package nexelliastratum
 
 import (
 	"context"
@@ -16,7 +16,7 @@ type KarlsenApi struct {
 	address       string
 	blockWaitTime time.Duration
 	logger        *zap.SugaredLogger
-	karlsend      *rpcclient.RPCClient
+	nexelliad      *rpcclient.RPCClient
 	connected     bool
 }
 
@@ -29,8 +29,8 @@ func NewKarlsenAPI(address string, blockWaitTime time.Duration, logger *zap.Suga
 	return &KarlsenApi{
 		address:       address,
 		blockWaitTime: blockWaitTime,
-		logger:        logger.With(zap.String("component", "karlsenapi:"+address)),
-		karlsend:      client,
+		logger:        logger.With(zap.String("component", "nexelliaapi:"+address)),
+		nexelliad:      client,
 		connected:     true,
 	}, nil
 }
@@ -49,14 +49,14 @@ func (ks *KarlsenApi) startStatsThread(ctx context.Context) {
 			ks.logger.Warn("context cancelled, stopping stats thread")
 			return
 		case <-ticker.C:
-			dagResponse, err := ks.karlsend.GetBlockDAGInfo()
+			dagResponse, err := ks.nexelliad.GetBlockDAGInfo()
 			if err != nil {
-				ks.logger.Warn("failed to get network hashrate from karlsen, prom stats will be out of date", zap.Error(err))
+				ks.logger.Warn("failed to get network hashrate from nexellia, prom stats will be out of date", zap.Error(err))
 				continue
 			}
-			response, err := ks.karlsend.EstimateNetworkHashesPerSecond(dagResponse.TipHashes[0], 1000)
+			response, err := ks.nexelliad.EstimateNetworkHashesPerSecond(dagResponse.TipHashes[0], 1000)
 			if err != nil {
-				ks.logger.Warn("failed to get network hashrate from karlsen, prom stats will be out of date", zap.Error(err))
+				ks.logger.Warn("failed to get network hashrate from nexellia, prom stats will be out of date", zap.Error(err))
 				continue
 			}
 			RecordNetworkStats(response.NetworkHashesPerSecond, dagResponse.BlockCount, dagResponse.Difficulty)
@@ -65,26 +65,26 @@ func (ks *KarlsenApi) startStatsThread(ctx context.Context) {
 }
 
 func (ks *KarlsenApi) reconnect() error {
-	if ks.karlsend != nil {
-		return ks.karlsend.Reconnect()
+	if ks.nexelliad != nil {
+		return ks.nexelliad.Reconnect()
 	}
 
 	client, err := rpcclient.NewRPCClient(ks.address)
 	if err != nil {
 		return err
 	}
-	ks.karlsend = client
+	ks.nexelliad = client
 	return nil
 }
 
 func (s *KarlsenApi) waitForSync(verbose bool) error {
 	if verbose {
-		s.logger.Info("checking karlsend sync state")
+		s.logger.Info("checking nexelliad sync state")
 	}
 	for {
-		clientInfo, err := s.karlsend.GetInfo()
+		clientInfo, err := s.nexelliad.GetInfo()
 		if err != nil {
-			return errors.Wrapf(err, "error fetching server info from karlsend @ %s", s.address)
+			return errors.Wrapf(err, "error fetching server info from nexelliad @ %s", s.address)
 		}
 		if clientInfo.IsSynced {
 			break
@@ -93,26 +93,26 @@ func (s *KarlsenApi) waitForSync(verbose bool) error {
 		time.Sleep(5 * time.Second)
 	}
 	if verbose {
-		s.logger.Info("karlsend synced, starting server")
+		s.logger.Info("nexelliad synced, starting server")
 	}
 	return nil
 }
 
 func (s *KarlsenApi) startBlockTemplateListener(ctx context.Context, blockReadyCb func()) {
 	blockReadyChan := make(chan bool)
-	err := s.karlsend.RegisterForNewBlockTemplateNotifications(func(_ *appmessage.NewBlockTemplateNotificationMessage) {
+	err := s.nexelliad.RegisterForNewBlockTemplateNotifications(func(_ *appmessage.NewBlockTemplateNotificationMessage) {
 		blockReadyChan <- true
 	})
 	if err != nil {
-		s.logger.Error("fatal: failed to register for block notifications from karlsen")
+		s.logger.Error("fatal: failed to register for block notifications from nexellia")
 	}
 
 	ticker := time.NewTicker(s.blockWaitTime)
 	for {
 		if err := s.waitForSync(false); err != nil {
-			s.logger.Error("error checking karlsend sync state, attempting reconnect: ", err)
+			s.logger.Error("error checking nexelliad sync state, attempting reconnect: ", err)
 			if err := s.reconnect(); err != nil {
-				s.logger.Error("error reconnecting to karlsend, waiting before retry: ", err)
+				s.logger.Error("error reconnecting to nexelliad, waiting before retry: ", err)
 				time.Sleep(5 * time.Second)
 			}
 		}
@@ -131,10 +131,10 @@ func (s *KarlsenApi) startBlockTemplateListener(ctx context.Context, blockReadyC
 
 func (ks *KarlsenApi) GetBlockTemplate(
 	client *gostratum.StratumContext) (*appmessage.GetBlockTemplateResponseMessage, error) {
-	template, err := ks.karlsend.GetBlockTemplate(client.WalletAddr,
-		fmt.Sprintf(`'%s' via karlsen-network/karlsen-stratum-bridge_%s`, client.RemoteApp, version))
+	template, err := ks.nexelliad.GetBlockTemplate(client.WalletAddr,
+		fmt.Sprintf(`'%s' via nexellia-network/nexellia-stratum-bridge_%s`, client.RemoteApp, version))
 	if err != nil {
-		return nil, errors.Wrap(err, "failed fetching new block template from karlsen")
+		return nil, errors.Wrap(err, "failed fetching new block template from nexellia")
 	}
 	return template, nil
 }

@@ -1,4 +1,4 @@
-package karlsenstratum
+package nexelliastratum
 
 import (
 	"context"
@@ -76,7 +76,7 @@ func ListenAndServe(cfg BridgeConfig) error {
 		go http.ListenAndServe(cfg.HealthCheckPort, nil)
 	}
 
-	shareHandler := newShareHandler(ksApi.karlsend)
+	shareHandler := newShareHandler(ksApi.nexelliad)
 	minDiff := cfg.MinShareDiff
 	if minDiff < 1 {
 		minDiff = 1

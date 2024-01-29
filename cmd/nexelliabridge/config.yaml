@@ -1,31 +1,31 @@
 # stratum_listen_port: the port that will be listening for incoming stratum traffic
-# Note `:PORT` format is needed if not specifiying a specific ip range 
+# Note `:PORT` format is needed if not specifiying a specific ip range
 stratum_port: :5555
 
-# karlsend_address: address/port of the rpc server for karlsend, typically 42110
-# For a list of public nodes, run `nslookup mainnet-dnsseed.daglabs-dev.com` 
+# nexelliad_address: address/port of the rpc server for nexelliad, typically 42110
+# For a list of public nodes, run `nslookup mainnet-dnsseed.daglabs-dev.com`
 # uncomment for to use a public node
-# karlsend_address: 46.17.104.200:42110
+# nexelliad_address: 46.17.104.200:42110
 nexelliad_address: localhost:33455
 
-# min_share_diff: only accept shares of the specified difficulty (or higher) from 
-# the miner(s).  Higher values will reduce the number of shares submitted, thereby 
+# min_share_diff: only accept shares of the specified difficulty (or higher) from
+# the miner(s).  Higher values will reduce the number of shares submitted, thereby
 # reducing network traffic and server load, while lower values will increase the
-# number of shares submitted, thereby reducing the amount of time needed for 
+# number of shares submitted, thereby reducing the amount of time needed for
 # accurate hashrate measurements
 min_share_diff: 64
 
-# block_wait_time: time to wait since last new block message from karlsend before
+# block_wait_time: time to wait since last new block message from nexelliad before
 # manually requesting a new block
 # block_wait_time: 500ms
 
-# extranonce_size: size in bytes of extranonce, from 0 (no extranonce) to 3. 
+# extranonce_size: size in bytes of extranonce, from 0 (no extranonce) to 3.
 # With no extranonce (0), all clients will search through the same nonce-space,
 # therefore performing duplicate work unless the miner(s) implement client
-# side nonce randomizing.  More bytes allow for more clients with unique 
-# nonce-spaces (i.e. no overlapping work), but reduces the per client 
+# side nonce randomizing.  More bytes allow for more clients with unique
+# nonce-spaces (i.e. no overlapping work), but reduces the per client
 # overall nonce-space (though with 1s block times, this shouldn't really
-# be a concern). 
+# be a concern).
 # 1 byte = 256 clients, 2 bytes = 65536, 3 bytes = 16777216.
 # extranonce_size: 0
 
@@ -40,5 +40,5 @@ log_to_file: true
 # see readme for summary on how to get prom up and running using docker
 # you can get the raw metrics (along with default golang metrics) using
 # `curl http://localhost:{prom_port}/metrics`
-# Note `:PORT` format is needed if not specifiying a specific ip range 
+# Note `:PORT` format is needed if not specifiying a specific ip range
 prom_port: :2114

@@ -2,7 +2,7 @@
     "isFavorite": false,
     "items": [
         {
-            "coin": "KLS",
+            "coin": "NXL",
             "pool_ssl": false,
             "dpool_ssl": false,
             "miner": "srbminer",
@@ -15,16 +15,16 @@
             "pool_geo": []
         },
         {
-            "coin": "KLS",
+            "coin": "NXL",
             "pool_ssl": false,
             "dpool_ssl": false,
             "miner": "custom",
-            "miner_alt": "kls_bridge",
+            "miner_alt": "nxl_bridge",
             "miner_config": {
-                "url": "YOUR_KARLSEND_NODE_IP_HERE:42110",
-                "miner": "kls_bridge",
+                "url": "YOUR_NEXELLIAD_NODE_IP_HERE:33455",
+                "miner": "nxl_bridge",
                 "template": "doesnt.matter",
-                "install_url": "https://github.com/GRinvestPOOL/nexellia-stratum-bridge/releases/download/v1.0.0/kls_bridge-1.0.0_hive.tar.gz"
+                "install_url": "https://github.com/GRinvestPOOL/nexellia-stratum-bridge/releases/download/v1.0.0/nxl_bridge-1.0.0_hive.tar.gz"
             },
             "pool_geo": []
         }
