@@ -11,7 +11,7 @@ services:
       - '-stats=false'
       - '-stratum=:5555'
       - '-prom=:2114'
-      - '-nexellia=host.docker.internal:16110'
+      - '-nexellia=host.docker.internal:33455'
     ports:
       - 5555:5555
       - 2114:2114
