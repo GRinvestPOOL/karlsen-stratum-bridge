@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/GRinvestPOOL/karlsen-stratum-bridge/src/gostratum"
+	"github.com/GRinvestPOOL/nexellia-stratum-bridge/src/gostratum"
 	"github.com/Nexellia-Network/nexelliad/app/appmessage"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"

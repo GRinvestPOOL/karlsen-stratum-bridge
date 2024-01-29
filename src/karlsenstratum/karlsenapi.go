@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/GRinvestPOOL/karlsen-stratum-bridge/src/gostratum"
+	"github.com/GRinvestPOOL/nexellia-stratum-bridge/src/gostratum"
 	"github.com/Nexellia-Network/nexelliad/app/appmessage"
 	"github.com/Nexellia-Network/nexelliad/infrastructure/network/rpcclient"
 	"github.com/pkg/errors"

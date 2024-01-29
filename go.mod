@@ -1,10 +1,10 @@
-module github.com/GRinvestPOOL/karlsen-stratum-bridge
+module github.com/GRinvestPOOL/nexellia-stratum-bridge
 
 go 1.18
 
 require (
-	github.com/google/go-cmp v0.5.8
 	github.com/Nexellia-Network/nexelliad v1.0.0
+	github.com/google/go-cmp v0.5.8
 	github.com/mattn/go-colorable v0.1.13
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.13.0

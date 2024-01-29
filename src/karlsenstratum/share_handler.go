@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/GRinvestPOOL/karlsen-stratum-bridge/src/gostratum"
+	"github.com/GRinvestPOOL/nexellia-stratum-bridge/src/gostratum"
 	"github.com/Nexellia-Network/nexelliad/app/appmessage"
 	"github.com/Nexellia-Network/nexelliad/domain/consensus/model/externalapi"
 	"github.com/Nexellia-Network/nexelliad/domain/consensus/utils/consensushashing"

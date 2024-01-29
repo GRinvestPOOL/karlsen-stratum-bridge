@@ -3,7 +3,7 @@ package karlsenstratum
 import (
 	"testing"
 
-	"github.com/GRinvestPOOL/karlsen-stratum-bridge/src/gostratum"
+	"github.com/GRinvestPOOL/nexellia-stratum-bridge/src/gostratum"
 	"github.com/Nexellia-Network/nexelliad/app/appmessage"
 )
 
